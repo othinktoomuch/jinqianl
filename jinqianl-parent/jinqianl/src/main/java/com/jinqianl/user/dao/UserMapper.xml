@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jinqianl.user.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.jinqianl.user.domain.User" >
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="login_id" property="loginId" jdbcType="VARCHAR" />
+    <result column="login_password" property="loginPassword" jdbcType="VARCHAR" />
+    <result column="user_tel" property="userTel" jdbcType="VARCHAR" />
+    <result column="wx_id" property="wxId" jdbcType="VARCHAR" />
+    <result column="user_status" property="userStatus" jdbcType="INTEGER" />
+    <result column="recommend_id" property="recommendId" jdbcType="INTEGER" />
+    <result column="yft_account" property="yftAccount" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="vip_end_time" property="vipEndTime" jdbcType="DATE" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="pay_password" property="payPassword" jdbcType="VARCHAR" />
+    <result column="level_type" property="levelType" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    user_id, user_name, login_id, login_password, user_tel, wx_id, user_status, recommend_id, 
+    yft_account, user_type, create_time, modify_time, vip_end_time, nick_name, pay_password, 
+    level_type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jinqianl.user.domain.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jinqianl.user.domain.UserExample" >
+    delete from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jinqianl.user.domain.User" >
+    insert into user (user_id, user_name, login_id, 
+      login_password, user_tel, wx_id, 
+      user_status, recommend_id, yft_account, 
+      user_type, create_time, modify_time, 
+      vip_end_time, nick_name, pay_password, 
+      level_type)
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{loginId,jdbcType=VARCHAR}, 
+      #{loginPassword,jdbcType=VARCHAR}, #{userTel,jdbcType=VARCHAR}, #{wxId,jdbcType=VARCHAR}, 
+      #{userStatus,jdbcType=INTEGER}, #{recommendId,jdbcType=INTEGER}, #{yftAccount,jdbcType=VARCHAR}, 
+      #{userType,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, 
+      #{vipEndTime,jdbcType=DATE}, #{nickName,jdbcType=VARCHAR}, #{payPassword,jdbcType=VARCHAR}, 
+      #{levelType,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jinqianl.user.domain.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="loginId != null" >
+        login_id,
+      </if>
+      <if test="loginPassword != null" >
+        login_password,
+      </if>
+      <if test="userTel != null" >
+        user_tel,
+      </if>
+      <if test="wxId != null" >
+        wx_id,
+      </if>
+      <if test="userStatus != null" >
+        user_status,
+      </if>
+      <if test="recommendId != null" >
+        recommend_id,
+      </if>
+      <if test="yftAccount != null" >
+        yft_account,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="vipEndTime != null" >
+        vip_end_time,
+      </if>
+      <if test="nickName != null" >
+        nick_name,
+      </if>
+      <if test="payPassword != null" >
+        pay_password,
+      </if>
+      <if test="levelType != null" >
+        level_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginId != null" >
+        #{loginId,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null" >
+        #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userTel != null" >
+        #{userTel,jdbcType=VARCHAR},
+      </if>
+      <if test="wxId != null" >
+        #{wxId,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="recommendId != null" >
+        #{recommendId,jdbcType=INTEGER},
+      </if>
+      <if test="yftAccount != null" >
+        #{yftAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="vipEndTime != null" >
+        #{vipEndTime,jdbcType=DATE},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="payPassword != null" >
+        #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="levelType != null" >
+        #{levelType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jinqianl.user.domain.UserExample" resultType="java.lang.Integer" >
+    select count(*) from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user
+    <set >
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userName != null" >
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginId != null" >
+        login_id = #{record.loginId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginPassword != null" >
+        login_password = #{record.loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userTel != null" >
+        user_tel = #{record.userTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wxId != null" >
+        wx_id = #{record.wxId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userStatus != null" >
+        user_status = #{record.userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.recommendId != null" >
+        recommend_id = #{record.recommendId,jdbcType=INTEGER},
+      </if>
+      <if test="record.yftAccount != null" >
+        yft_account = #{record.yftAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userType != null" >
+        user_type = #{record.userType,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyTime != null" >
+        modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.vipEndTime != null" >
+        vip_end_time = #{record.vipEndTime,jdbcType=DATE},
+      </if>
+      <if test="record.nickName != null" >
+        nick_name = #{record.nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payPassword != null" >
+        pay_password = #{record.payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.levelType != null" >
+        level_type = #{record.levelType,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user
+    set user_id = #{record.userId,jdbcType=INTEGER},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      login_id = #{record.loginId,jdbcType=VARCHAR},
+      login_password = #{record.loginPassword,jdbcType=VARCHAR},
+      user_tel = #{record.userTel,jdbcType=VARCHAR},
+      wx_id = #{record.wxId,jdbcType=VARCHAR},
+      user_status = #{record.userStatus,jdbcType=INTEGER},
+      recommend_id = #{record.recommendId,jdbcType=INTEGER},
+      yft_account = #{record.yftAccount,jdbcType=VARCHAR},
+      user_type = #{record.userType,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      vip_end_time = #{record.vipEndTime,jdbcType=DATE},
+      nick_name = #{record.nickName,jdbcType=VARCHAR},
+      pay_password = #{record.payPassword,jdbcType=VARCHAR},
+      level_type = #{record.levelType,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jinqianl.user.domain.User" >
+    update user
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginId != null" >
+        login_id = #{loginId,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null" >
+        login_password = #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userTel != null" >
+        user_tel = #{userTel,jdbcType=VARCHAR},
+      </if>
+      <if test="wxId != null" >
+        wx_id = #{wxId,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        user_status = #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="recommendId != null" >
+        recommend_id = #{recommendId,jdbcType=INTEGER},
+      </if>
+      <if test="yftAccount != null" >
+        yft_account = #{yftAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="vipEndTime != null" >
+        vip_end_time = #{vipEndTime,jdbcType=DATE},
+      </if>
+      <if test="nickName != null" >
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="payPassword != null" >
+        pay_password = #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="levelType != null" >
+        level_type = #{levelType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jinqianl.user.domain.User" >
+    update user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      login_id = #{loginId,jdbcType=VARCHAR},
+      login_password = #{loginPassword,jdbcType=VARCHAR},
+      user_tel = #{userTel,jdbcType=VARCHAR},
+      wx_id = #{wxId,jdbcType=VARCHAR},
+      user_status = #{userStatus,jdbcType=INTEGER},
+      recommend_id = #{recommendId,jdbcType=INTEGER},
+      yft_account = #{yftAccount,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      vip_end_time = #{vipEndTime,jdbcType=DATE},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      pay_password = #{payPassword,jdbcType=VARCHAR},
+      level_type = #{levelType,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>
